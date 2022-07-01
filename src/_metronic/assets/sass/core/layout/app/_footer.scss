@@ -1,0 +1,88 @@
+//
+// Footer
+//
+
+// General mode
+.app-footer {
+  @include app-layout-transition();
+  display: flex;
+  align-items: stretch;
+}
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+  // Base
+  .app-footer {
+    @include attr(z-index, $app-footer-z-index);
+    @include attr(background-color, $app-footer-bg-color);
+    @include attr(box-shadow, $app-footer-box-shadow);
+    @include attr(border-top, $app-footer-border-top);
+  }
+
+  // Vars
+  body {
+    --kt-app-footer-height: #{$app-footer-height};
+  }
+
+  // States
+  .app-footer {
+    height: var(--kt-app-footer-height);
+
+    [data-kt-app-footer-fixed='true'] & {
+      @include attr(z-index, $app-footer-fixed-z-index);
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  // Integration
+  .app-footer {
+    // Aside
+    [data-kt-app-aside-fixed='true'][data-kt-app-aside-push-footer='true'] & {
+      left: calc(
+        var(--kt-app-aside-width) + var(--kt-app-aside-gap-start, 0px) +
+          var(--kt-app-aside-gap-end, 0px)
+      );
+    }
+
+    // Aside Panel
+    [data-kt-app-aside-panel-fixed='true'][data-kt-app-aside-panel-push-footer='true'] & {
+      left: calc(
+        var(--kt-app-aside-width) + var(--kt-app-aside-gap-start, 0px) +
+          var(--kt-app-aside-gap-end, 0px) + var(--kt-app-aside-panel-width) +
+          var(--kt-app-aside-panel-gap-start, 0px) + var(--kt-app-aside-panel-gap-end, 0px)
+      );
+    }
+  }
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+  // Base
+  .app-footer {
+    @include attr(z-index, $app-footer-z-index-mobile);
+    @include attr(background-color, $app-footer-bg-color-mobile);
+    @include attr(box-shadow, $app-footer-box-shadow-mobile);
+    @include attr(border-top, $app-footer-border-top-mobile);
+  }
+
+  // Vars
+  [data-kt-app-footer-fixed-mobile='true'] {
+    --kt-app-footer-height: #{$app-footer-height};
+  }
+
+  // States
+  .app-footer {
+    height: var(--kt-app-header-height);
+
+    [data-kt-app-footer-fixed-mobile='true'] & {
+      @include attr(z-index, $app-footer-fixed-z-index-mobile);
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}

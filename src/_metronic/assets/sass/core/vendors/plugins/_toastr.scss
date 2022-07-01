@@ -1,0 +1,83 @@
+//
+// Toastr
+//
+
+// Base
+.toastr {
+  background-position: 1.5rem center #{'/*rtl:calc(100% - 1.5rem) center*/'} !important;
+  box-shadow: $dropdown-box-shadow !important;
+  border-radius: $dropdown-border-radius !important;
+  border: 0 !important;
+  background-color: $gray-100;
+  color: $gray-700;
+  padding: 1.25rem 1.25rem 1.25rem 4.5rem !important;
+
+  .toastr-close-button {
+    outline: none !important;
+    font-size: 0;
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  // Title
+  .toastr-title {
+    font-size: 1.15rem;
+    font-weight: $font-weight-bold;
+
+    & + .toastr-message {
+      margin-top: 0.25rem;
+    }
+  }
+
+  // Message
+  .toastr-message {
+    font-size: 1rem;
+    font-weight: $font-weight-normal;
+  }
+
+  // States
+  &.toastr-success {
+    background-color: $success;
+    color: $success-inverse;
+
+    .toastr-close-button {
+      @include svg-bg-icon(close, $success-inverse);
+    }
+  }
+
+  &.toastr-info {
+    background-color: $info;
+    color: $info-inverse;
+
+    .toastr-close-button {
+      @include svg-bg-icon(close, $info-inverse);
+    }
+  }
+
+  &.toastr-warning {
+    background-color: $warning;
+    color: $warning-inverse;
+
+    .toastr-close-button {
+      @include svg-bg-icon(close, $warning-inverse);
+    }
+  }
+
+  &.toastr-error {
+    background-color: $danger;
+    color: $danger-inverse;
+
+    .toastr-close-button {
+      @include svg-bg-icon(close, $danger-inverse);
+    }
+  }
+}
+
+// Placements
+.toastr-top-center {
+  top: 12px;
+}
+
+.toastr-bottom-center {
+  bottom: 12px;
+}

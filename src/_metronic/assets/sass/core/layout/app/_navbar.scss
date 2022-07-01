@@ -1,0 +1,13 @@
+//
+// App Navbar
+//
+
+.app-navbar {
+  display: flex;
+  align-items: stretch;
+
+  .app-navbar-item {
+    display: flex;
+    align-items: center;
+  }
+}

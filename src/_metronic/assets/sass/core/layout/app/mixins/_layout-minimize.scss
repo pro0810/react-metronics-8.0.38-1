@@ -1,0 +1,29 @@
+//
+// Hoverable
+//
+
+@mixin app-layout-minimize($class) {
+  // Desktop mode
+  @include media-breakpoint-up(lg) {
+    [data-kt-#{$class}-hoverable='true'][data-kt-#{$class}-minimize='on'] {
+      .#{$class} {
+        &:not(:hover) {
+          @content;
+        }
+      }
+    }
+  }
+}
+
+@mixin app-layout-minimize-mobile($class) {
+  // Tablet & mobile modes
+  @include media-breakpoint-down(lg) {
+    [data-kt-#{$class}-hoverable-mobile='true'][data-kt-#{$class}-minimize-mobile='on'] {
+      .#{$class} {
+        &:not(:hover) {
+          @content;
+        }
+      }
+    }
+  }
+}

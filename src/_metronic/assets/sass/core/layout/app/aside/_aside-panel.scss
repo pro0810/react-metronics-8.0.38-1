@@ -1,0 +1,258 @@
+//
+// Aside
+//
+
+// General mode
+.app-aside-panel {
+  @include app-layout-transition();
+}
+
+// Desktop mode
+@include media-breakpoint-up(lg) {
+  // Base
+  .app-aside-panel {
+    display: flex;
+    flex-shrink: 0;
+    width: var(--kt-app-aside-panel-width);
+    @include attr(z-index, $app-aside-panel-base-z-index);
+    @include attr(background-color, $app-aside-panel-base-bg-color);
+    @include attr(box-shadow, $app-aside-panel-base-box-shadow);
+    @include attr(border-left, $app-aside-panel-base-border-start);
+    @include attr(border-right, $app-aside-panel-base-border-end);
+    @include attr(margin-left, $app-aside-panel-base-gap-start);
+    @include attr(margin-right, $app-aside-panel-base-gap-end);
+    @include attr(margin-top, $app-aside-panel-base-gap-top);
+    @include attr(margin-bottom, $app-aside-panel-base-gap-bottom);
+  }
+
+  // Vars
+  body {
+    --kt-app-aside-panel-width: #{$app-aside-panel-base-width};
+    --kt-app-aside-panel-width-actual: #{$app-aside-panel-base-width};
+
+    --kt-app-aside-panel-gap-start: #{$app-aside-panel-base-gap-start};
+    --kt-app-aside-panel-gap-end: #{$app-aside-panel-base-gap-end};
+    --kt-app-aside-panel-gap-top: #{$app-aside-panel-base-gap-top};
+    --kt-app-aside-panel-gap-bottom: #{$app-aside-panel-base-gap-bottom};
+  }
+
+  [data-kt-app-aside-panel-minimize='on'] {
+    --kt-app-aside-panel-width: #{$app-aside-panel-minimize-width};
+
+    --kt-app-aside-panel-gap-start: #{$app-aside-panel-minimize-gap-start};
+    --kt-app-aside-panel-gap-end: #{$app-aside-panel-minimize-gap-end};
+    --kt-app-aside-panel-gap-top: #{$app-aside-panel-minimize-gap-top};
+    --kt-app-aside-panel-gap-bottom: #{$app-aside-panel-minimize-gap-bottom};
+  }
+
+  [data-kt-app-aside-panel-sticky='on'] {
+    --kt-app-aside-panel-width: #{$app-aside-panel-sticky-width};
+
+    --kt-app-aside-panel-gap-start: #{$app-aside-panel-sticky-gap-start};
+    --kt-app-aside-panel-gap-end: #{$app-aside-panel-sticky-gap-end};
+    --kt-app-aside-panel-gap-top: #{$app-aside-panel-sticky-gap-top};
+    --kt-app-aside-panel-gap-bottom: #{$app-aside-panel-sticky-gap-bottom};
+  }
+
+  [data-kt-app-aside-panel-collapse='on'] {
+    --kt-app-aside-panel-width-actual: #{$app-aside-panel-base-width};
+    --kt-app-aside-panel-width: 0px;
+  }
+
+  // States
+  .app-aside-panel {
+    [data-kt-app-aside-panel-static='true'] & {
+      position: relative;
+    }
+
+    [data-kt-app-aside-panel-offcanvas='true'] & {
+      display: none;
+    }
+
+    [data-kt-app-aside-panel-fixed='true'] & {
+      @include attr(z-index, $app-aside-panel-fixed-z-index);
+      position: fixed;
+      left: calc(
+        var(--kt-app-aside-width) + var(--kt-app-aside-gap-start, 0px) +
+          var(--kt-app-aside-gap-end, 0px)
+      );
+      top: 0;
+      bottom: 0;
+    }
+
+    [data-kt-app-aside-panel-sticky='on'] & {
+      position: fixed;
+      left: calc(
+        var(--kt-app-aside-width) + var(--kt-app-aside-gap-start, 0px) +
+          var(--kt-app-aside-gap-end, 0px)
+      );
+      top: 0;
+      bottom: 0;
+      @include app-layout-transition();
+      @include attr(z-index, $app-aside-panel-sticky-z-index);
+      @include attr(box-shadow, $app-aside-panel-sticky-box-shadow);
+      @include attr(border-left, $app-aside-panel-sticky-border-start);
+      @include attr(border-right, $app-aside-panel-sticky-border-end);
+      @include attr(margin-left, $app-aside-panel-sticky-gap-start);
+      @include attr(margin-right, $app-aside-panel-sticky-gap-end);
+      @include attr(margin-top, $app-aside-panel-sticky-gap-top);
+      @include attr(margin-bottom, $app-aside-panel-sticky-gap-bottom);
+    }
+
+    [data-kt-app-aside-panel-minimize='on'] & {
+      @include app-layout-transition();
+      @include attr(background-color, $app-aside-panel-minimize-bg-color);
+      @include attr(box-shadow, $app-aside-panel-minimize-box-shadow);
+      @include attr(border-left, $app-aside-panel-minimize-border-start);
+      @include attr(border-right, $app-aside-panel-minimize-border-end);
+      @include attr(margin-left, $app-aside-panel-minimize-gap-start);
+      @include attr(margin-right, $app-aside-panel-minimize-gap-end);
+      @include attr(margin-top, $app-aside-panel-minimize-gap-top);
+      @include attr(margin-bottom, $app-aside-panel-minimize-gap-bottom);
+    }
+
+    [data-kt-app-aside-panel-hoverable='true'][data-kt-app-aside-panel-minimize='on']
+      &:hover:not(.animating) {
+      @include app-layout-transition();
+      width: var(--kt-app-aside-panel-width-actual);
+      @include attr(box-shadow, $app-aside-panel-minimize-hover-box-shadow);
+    }
+
+    [data-kt-app-aside-panel-collapse='on'] & {
+      @include app-layout-transition();
+      width: var(--kt-app-aside-panel-width-actual);
+      margin-left: calc(
+        -1 * (var(--kt-app-aside-panel-width-actual) + var(--kt-app-aside-gap-start, 0px) +
+              var(--kt-app-aside-gap-end, 0px))
+      );
+    }
+  }
+
+  // Integration
+  .app-aside-panel {
+    // Header
+    [data-kt-app-aside-panel-fixed='true'][data-kt-app-header-fixed='true']:not([data-kt-app-aside-panel-push-header='true'])
+      & {
+      top: var(--kt-app-header-height);
+    }
+
+    // Toolbar
+    [data-kt-app-aside-panel-fixed='true'][data-kt-app-header-fixed='true'][data-kt-app-toolbar-fixed='true']:not([data-kt-app-aside-panel-push-toolbar='true'])
+      & {
+      top: calc(var(--kt-app-header-height) + var(--kt-app-toolbar-height, 0));
+    }
+  }
+
+  // Utilities
+  [data-kt-app-aside-panel-minimize='on'] {
+    .app-aside-panel-minimize-d-none {
+      display: none !important;
+    }
+
+    .app-aside-panel-minimize-d-flex {
+      display: flex !important;
+    }
+  }
+
+  [data-kt-app-aside-panel-sticky='on'] {
+    .app-aside-panel-sticky-d-none {
+      display: none !important;
+    }
+
+    .app-aside-panel-sticky-d-flex {
+      display: flex !important;
+    }
+  }
+
+  [data-kt-app-aside-panel-collapse='on'] {
+    .app-aside-panel-collapse-d-none {
+      display: none !important;
+    }
+
+    .app-aside-panel-collapse-d-flex {
+      display: flex !important;
+    }
+  }
+}
+
+// Tablet & mobile modes
+@include media-breakpoint-down(lg) {
+  // Base
+  .app-aside-panel {
+    display: none;
+    width: var(--kt-app-aside-panel-width);
+    @include attr(z-index, $app-aside-panel-base-z-index-mobile);
+    @include attr(background-color, $app-aside-panel-base-bg-color-mobile);
+    @include attr(box-shadow, $app-aside-panel-base-box-shadow-mobile);
+    @include attr(border-left, $app-aside-panel-base-border-start-mobile);
+    @include attr(border-right, $app-aside-panel-base-border-end-mobile);
+    @include attr(margin-left, $app-aside-panel-base-gap-start-mobile);
+    @include attr(margin-right, $app-aside-panel-base-gap-end-mobile);
+    @include attr(margin-top, $app-aside-panel-base-gap-top-mobile);
+    @include attr(margin-bottom, $app-aside-panel-base-gap-bottom-mobile);
+  }
+
+  // Vars
+  body {
+    --kt-app-aside-panel-gap-start: #{$app-aside-panel-base-gap-start-mobile};
+    --kt-app-aside-panel-gap-end: #{$app-aside-panel-base-gap-end-mobile};
+    --kt-app-aside-panel-gap-top: #{$app-aside-panel-base-gap-top-mobile};
+    --kt-app-aside-panel-gap-bottom: #{$app-aside-panel-base-gap-bottom-mobile};
+  }
+
+  [data-kt-app-aside-panel-minimize-mobile='on'] {
+    --kt-app-aside-panel-width: #{$app-aside-panel-minimize-width-mobile};
+
+    --kt-app-aside-panel-gap-start: #{$app-aside-panel-minimize-gap-start-mobile};
+    --kt-app-aside-panel-gap-end: #{$app-aside-panel-minimize-gap-end-mobile};
+    --kt-app-aside-panel-gap-top: #{$app-aside-panel-minimize-gap-top-mobile};
+    --kt-app-aside-panel-gap-bottom: #{$app-aside-panel-minimize-gap-bottom-mobile};
+  }
+
+  [data-kt-app-aside-panel-collapse-mobile='on'] {
+    --kt-app-aside-panel-width-actual: #{$app-aside-panel-base-width-mobile};
+    --kt-app-aside-panel-width: 0px;
+  }
+
+  // States
+  .app-aside-panel {
+    [data-kt-app-aside-panel-minimize-mobile='on'] & {
+      @include app-layout-transition();
+      @include attr(background-color, $app-aside-panel-minimize-bg-color-mobile);
+      @include attr(box-shadow, $app-aside-panel-minimize-box-shadow-mobile);
+      @include attr(border-left, $app-aside-panel-minimize-border-start-mobile);
+      @include attr(border-right, $app-aside-panel-minimize-border-end-mobile);
+      @include attr(margin-left, $app-aside-panel-minimize-gap-start-mobile);
+      @include attr(margin-right, $app-aside-panel-minimize-gap-end-mobile);
+      @include attr(margin-top, $app-aside-panel-minimize-gap-top-mobile);
+      @include attr(margin-bottom, $app-aside-panel-minimize-gap-bottom-mobile);
+    }
+
+    [data-kt-app-aside-panel-collapse-mobile='on'] & {
+      @include app-layout-transition();
+      width: var(--kt-app-aside-panel-width-actual);
+      margin-left: calc(-1 * var(--kt-app-aside-panel-width-actual));
+    }
+  }
+
+  // Utilities
+  [data-kt-app-aside-panel-minimize-mobile='on'] {
+    .app-aside-panel-minimize-mobile-d-none {
+      display: none !important;
+    }
+
+    .app-aside-panel-minimize-mobile-d-flex {
+      display: flex !important;
+    }
+  }
+
+  [data-kt-app-aside-panel-collapse-mobile='on'] {
+    .app-aside-panel-collapse-mobile-d-none {
+      display: none !important;
+    }
+
+    .app-aside-panel-collapse-mobile-d-flex {
+      display: flex !important;
+    }
+  }
+}
