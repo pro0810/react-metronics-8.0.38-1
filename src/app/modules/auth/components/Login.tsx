@@ -15,14 +15,14 @@ const loginSchema = Yup.object().shape({
     .max(50, 'Maximum 50 symbols')
     .required('Email is required'),
   password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
+    .min(8, 'Minimum 8 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Password is required'),
 })
 
 const initialValues = {
   email: 'admin@demo.com',
-  password: 'demo',
+  password: 'Qwer!234',
 }
 
 /*
@@ -43,7 +43,7 @@ export function Login() {
       try {
         const {data: auth} = await login(values.email, values.password)
         saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
+        const {data: user} = await getUserByToken()
         setCurrentUser(user)
       } catch (error) {
         console.error(error)
